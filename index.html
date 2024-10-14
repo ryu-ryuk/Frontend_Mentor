@@ -201,44 +201,43 @@
 
     <footer class="footer">
       <div class="footer-section">
-        <h1>Contact Us</h1>
-        <ul class="footer-list">
-          <li>
-            <a href="mailto:trendtrove1004@gmail.com"
-              >frontentmentor1004@gmail.com</a
-            >
-          </li>
-          <li>2nd Floor, Bandra West, Mumbai, Maharashtra 400050, India</li>
-          <li><a href="tel:+91xxxxxxxx2020">+91 xxxxxx2020</a></li>
-          <li class="border-list"></li>
-          <li class="socials">
-            <a
-              href="https://www.linkedin.com/in/berajeevkumar/"
-              id="linkedin"
-              target="_blank"
-            >
-              <i class="fa-brands fa-linkedin"></i>
-            </a>
-            <a
-              href="https://github.com/beRajeevKumar/Frontend_Mentor"
-              id="github"
-              target="_blank"
-            >
-              <i class="fa-brands fa-github"></i>
-            </a>
-            <a href="https://x.com/be_rajeevkumar" id="twitter" target="_blank">
-              <i class="fa-brands fa-x-twitter"></i>
-            </a>
-            <a
-              href="https://www.instagram.com/your_instagram"
-              id="instagram"
-              target="_blank"
-            >
-              <i class="fa-brands fa-instagram"></i>
-            </a>
-          </li>
-        </ul>
+          <h1>Contact Us</h1>
+          <ul class="footer-list">
+              <li><a href="mailto:trendtrove1004@gmail.com">frontentmentor1004@gmail.com</a></li>
+              <li>2nd Floor, Bandra West, Mumbai, Maharashtra 400050, India</li>
+              <li><a href="tel:+91xxxxxxxx2020">+91 xxxxxx2020</a></li>
+              <li class="socials">
+                  <a href="https://www.linkedin.com/in/berajeevkumar/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                  <a href="https://github.com/beRajeevKumar/Frontend_Mentor" target="_blank"><i class="fa-brands fa-github"></i></a>
+                  <a href="https://x.com/be_rajeevkumar" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                  <a href="https://www.instagram.com/your_instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+              </li>
+          </ul>
       </div>
+  
+      <div class="footer-section">
+          <h1>Quick Links</h1>
+          <ul class="footer-list">
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="/terms-conditions">Terms & Conditions</a></li>
+              <li><a href="/return-policy">Return Policy</a></li>
+              <li><a href="https://github.com/beRajeevKumar/Frontend_Mentor" target="_blank">Star Us</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+      </div>
+  
+      <div class="footer-section">
+          <h1>Subscribe to Newsletter</h1>
+          <ul class="footer-list">
+              <li>Get the latest updates, exclusive offers, and industry insights delivered straight to your inbox.</li>
+              <li class="sub">
+                  <input type="text" placeholder="Enter your email" />
+                  <button class="btn-sub">Subscribe</button>
+              </li>
+          </ul>
+      </div>
+  </footer>
+
 
       <div class="footer-section">
         <h1>Quick Links</h1>
@@ -285,7 +284,7 @@
 
       // GSAP Animations
       gsap.from(".navbar", { opacity: 0, y: -50, duration: 1.5, ease: "power3.out" });
-      gsap.from(".scroll-up-btn", { opacity: 0, duration: 2, ease: "power2.out", delay: 1 });
+      gsap.from(".scroll-up-btn", { opacity: 0, scale: 0.5, duration: 2, ease: "power2.out", delay: 1 });
       gsap.from("img", { rotation: 360, duration: 1, ease: "power2.out" });
 
       // Navbar items animation
@@ -296,23 +295,26 @@
           duration: 0.5,
           ease: "power2.out",
           delay: index * 0.1 + 0.5,
+          stagger: 0.1,
         });
       });
 
       // Section Titles Animation
-      gsap.utils.toArray("section h2").forEach((title) => {
-        gsap.from(title, {
+            gsap.utils.toArray(".faq, .footer-section").forEach((element) => {
+        gsap.from(element, {
           scrollTrigger: {
-            trigger: title,
+            trigger: element,
             start: "top 80%",
             toggleActions: "play none none none",
+            once: true, // Trigger only once
           },
-          scale: 0.8,
           opacity: 0,
-          duration: 1,
+          y: 50,
+          duration: 1.5,
           ease: "power2.out",
         });
       });
+
 
       // Project List Items Animation
       gsap.utils.toArray("#list li").forEach((item, index) => {
@@ -332,32 +334,36 @@
       });
 
       // Accordion Animation
-      const accordions = document.querySelectorAll(".accordion");
-      accordions.forEach((accordion) => {
+            accordions.forEach((accordion) => {
         accordion.addEventListener("click", function () {
           const panel = this.nextElementSibling;
-          const isOpen = panel.style.maxHeight;
+          const isOpen = panel.style.height;
           gsap.to(panel, {
-            maxHeight: isOpen ? 0 : panel.scrollHeight,
+            height: isOpen ? "0" : `${panel.scrollHeight}px`, 
             duration: 0.5,
             ease: "power2.out",
+            onComplete: () => {
+              panel.style.display = isOpen ? "none" : "block";
+            }
           });
         });
       });
+
 
       // Footer Social Icons Hover Animation
       const socials = document.querySelectorAll(".socials a");
       socials.forEach((icon) => {
         icon.addEventListener("mouseover", () => {
-          gsap.to(icon, { rotation: 15, duration: 0.3 });
+          gsap.to(icon, { rotation: 15, scale: 1.1, duration: 0.3 });
         });
         icon.addEventListener("mouseleave", () => {
-          gsap.to(icon, { rotation: 0, duration: 0.3 });
+          gsap.to(icon, { rotation: 0, scale: 1, duration: 0.3 });
         });
       });
 
+
       // Scroll-based animation for the FAQs and sections
-      gsap.utils.toArray(".faq, .footer-section").forEach((element) => {
+      gsap.utils.toArray(".faq").forEach((element, index) => {
         gsap.from(element, {
           scrollTrigger: {
             trigger: element,
@@ -367,9 +373,11 @@
           opacity: 0,
           y: 50,
           duration: 1.5,
+          delay: index * 0.2, // Stagger delay based on index
           ease: "power2.out",
         });
       });
+
     </script>
   </body>
 </html>
